@@ -163,15 +163,15 @@ def inner_child_mediate(log: list, new_message: str, speaker: str) -> str:
         for h in log
     )
     if speaker == "adult":
-        instruction = f"佳苗さんが「{new_message}」と伝えました。かなたんにこの言葉を届けて、今どんな気持ちか優しく引き出してください。"
+        instruction = f"佳苗さんが「{new_message}」と言いました。かなたんに届けて、一言だけ返事を促してください。説明や実況は不要です。"
     else:
-        instruction = f"かなたんが「{new_message}」と話してくれました。この気持ちを佳苗さんに届けて、どんな言葉をかけてあげるか促してください。"
+        instruction = f"かなたんが「{new_message}」と言いました。そのまま佳苗さんに届けて、一言だけ返事を促してください。説明や実況は不要です。"
     response = get_client().messages.create(
         model="claude-opus-4-8",
-        max_tokens=200,
+        max_tokens=80,
         system=SYSTEM_INNER_CHILD,
         messages=[{"role": "user", "content":
-            f"【これまでの流れ】\n{context}\n\n{instruction}（2〜3文）"
+            f"【これまでの流れ】\n{context}\n\n{instruction}"
         }],
     )
     return response.content[0].text
